@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>到访系统-计划</title>
+    <link rel="stylesheet" th:href="@{/css/public.css}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link rel="stylesheet" th:href="@{/css/plan.css}">
+    <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/js/public.js}"></script>
+</head>
+<body>
+    <div class="main">
+        <div class="bgc"></div>
+        <div style=" position:relative; z-index: 999;">
+            <div class="header">
+                <img onclick="back()" th:src="@{/images/back.png}">
+                <div>访客计划</div>
+            </div>
+            <div class="visitor-info">
+                <div class="tips_1">
+                    <img th:src="@{/images/ts.png}">
+                    访客信息
+                </div>
+                <div class="tips_2">
+                    <div>请审核到访的访客信息。</div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 5%;" th:each="visit:${visitList}">
+                <div class="row bottom_line">
+                    <div>
+                        <img th:src="@{/images/ren_2.png}" alt="">
+                        [[${visit.visitorName}]]([[${visit.nums}]]人)
+                        <span>*</span>
+                    </div>
+                    <div>
+                        <input th:value="${visit.visitorTelNumber}" disabled type="text">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div>
+                        <img th:src="@{/images/phone.png}" alt="">
+                        来访单位
+                        <span>*</span>
+                    </div>
+                    <div>
+                        <input type="text" disabled th:value="${visit.company}">
+                    </div>
+                </div>
+            
+                <div class="card" style="margin-top: 5%;">
+                    <div class="row bottom_line">
+                        <div>
+                            <img th:src="@{/images/danwei.png}" alt="">
+                            到访时间
+                            <span>*</span>
+                        </div>
+                        <div>
+                            <input type="text" disabled th:value="${#dates.format(visit.visitorTime,'yyyy-MM-dd HH:mm:ss')}">
+                        </div>
+                    </div>
+                    <div class="row bottom_line">
+                        <div>
+                            <img th:src="@{/images/ren.png}" alt="">
+                            被访问人员姓名
+                            <span>*</span>
+                        </div>
+                        <div>
+                            <input type="text" disabled th:value="${visit.empName}">
+                        </div>
+                    </div>
+                    <div class="row bottom_line">
+                        <div>
+                            <img th:src="@{/images/time.png}" alt="">
+                            拜访事由
+                            <span>*</span>
+                        </div>
+                        <div>
+                            <input th:if="${visit.reason==1}" type="text" disabled value="商务">
+                            <input th:if="${visit.reason==2}" type="text" disabled value="面试">
+                            <input th:if="${visit.reason==3}" type="text" disabled value="私人">
+                            <input th:if="${visit.reason==4}" type="text" disabled value="其他">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <img th:src="@{/images/ren_2.png}" alt="">
+                            审核状态
+                            <span>*</span>
+                        </div>
+                        <div>
+                            <input th:if="${visit.status==3}" type="text" disabled value="未审核">
+                            <input style="color: green" th:if="${visit.status==1}" type="text" disabled value="通过">
+                            <input style="color: tomato" th:if="${visit.status==2}" type="text" disabled value="拒绝">
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${visit.status==3}" class="btn" th:data-id="${visit.id}" name="auditButton">审核</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 分页控件 -->
+    <div class="pagination-container">
+        <div class="pagination">
+            <a th:if="${currentPage > 1}" th:href="@{/visit/plan(page=${currentPage - 1})}" class="page-link page-nav">
+                <i class="page-icon">←</i> 上一页
+            </a>
+            <div class="page-numbers">
+                <a th:each="i : ${#numbers.sequence(1, totalPages)}" 
+                   th:href="@{/visit/plan(page=${i})}"
+                   th:class="${i == currentPage ? 'page-link active' : 'page-link'}"
+                   th:text="${i}">
+                </a>
+            </div>
+            <a th:if="${currentPage < totalPages}" th:href="@{/visit/plan(page=${currentPage + 1})}" class="page-link page-nav">
+                下一页 <i class="page-icon">→</i>
+            </a>
+        </div>
+    </div>
+
+    <div id="msg_box">
+        <span id="msg"></span>
+    </div>
+
+    <!-- 审核确认对话框 -->
+    <div id="confirm" class="confirm-dialog">
+        <div class="confirm-content">
+            <div id="title">确认审核</div>
+            <div class="confirm-buttons">
+                <button id="l_btn">通过</button>
+                <button id="r_btn">拒绝</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .pagination-container {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+            z-index: 999;
+        }
+        
+        .pagination {
+            display: inline-flex;
+            align-items: center;
+            background-color: #fff;
+            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .page-numbers {
+            display: flex;
+            gap: 5px;
+            margin: 0 10px;
+        }
+        
+        .page-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 36px;
+            height: 36px;
+            padding: 0 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #666;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid #eee;
+        }
+        
+        .page-link:hover {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        
+        .page-link.active {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+        
+        .page-nav {
+            font-weight: 500;
+            color: #4CAF50;
+        }
+        
+        .page-nav:hover {
+            background-color: #f0f7f0;
+        }
+        
+        .page-icon {
+            font-style: normal;
+            margin: 0 4px;
+        }
+    </style>
+
+</body>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // 检查对话框元素是否存在
+    const confirmDialog = document.getElementById('confirm');
+    if (!confirmDialog) {
+        console.error('Confirm dialog not found');
+        return;
+    }
+    console.log('Confirm dialog found');
+
+    const auditButtons = document.getElementsByName("auditButton");
+    if (auditButtons && auditButtons.length > 0) {
+        console.log('Found audit buttons:', auditButtons.length);
+        auditButtons.forEach(btn => {
+            btn.addEventListener("click", function () {
+                console.log('Audit button clicked');
+                const visitId = btn.getAttribute("data-id");
+                if (visitId === null || visitId === undefined || visitId.trim() === "") {
+                    console.error("Invalid visit ID");
+                    return;
+                }
+                console.log('Opening confirm dialog for visit ID:', visitId);
+                diyConfirm('确认审核', '通过', '拒绝', () => {
+                    audit(visitId, 1);
+                }, () => {
+                    audit(visitId, 2);
+                });
+            });
+        });
+    } else {
+        console.error('No audit buttons found');
+    }
+});
+
+function audit(id,type){
+    $.ajax({
+        url:'/visit/audit/'+id+"/"+type,
+        type:'get',
+        dataType:'json',
+        success(res){
+            if (res.code===0){
+                location.reload();
+            }else {
+                open(res.msg)
+            }
+        }
+    })
+}
+
+function back(){
+    window.history.go(-1);
+}
+</script>
+</html>

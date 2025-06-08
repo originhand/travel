@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>到访系统</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <div class="main">
+        <!-- 顶部图标 -->
+        <div class="row">
+            <img th:src="@{/images/cherry-blossom.png}" alt="樱花科技logo">
+            <span>樱花科技</span>
+        </div>
+        
+        <!-- 背景图片 -->
+        <img class="bg" th:src="@{/images/CAR2x.png}" alt="背景图片">
+        
+        <!-- 按钮区域 -->
+        <div class="btn-container">
+            <div class="btn" onclick="goLogin(1)">登录</div>
+            <div class="btn" onclick="goLogin(2)">拜访</div>
+        </div>
+
+        <!-- 底部文字 -->
+        <div class="bottom_div">
+            <p>欢迎来到樱花科技公司</p>
+            <p>www.yinghua.com</p>
+        </div>
+    </div>
+
+    <script>
+        function goLogin(type) {
+            switch (type) {
+                case 1:
+                    location.href = '/emp/login';
+                    break;
+                case 2:
+                    location.href = '/visit/visit_page';
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main {
+    width: 100%;
+    height: 100vh;
+    padding: 10px 3%;
+    padding-top: 20%;
+    background-color: #E0EDFE;
+    position: relative;
+}
+#msg_box{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.2);
+    z-index: 999;
+    text-align: center;
+    display: none;
+}
+#msg{
+    background-color: rgba(0,0,0,0.6);
+    text-align: center;
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: #ffffff;
+    position: fixed;
+    bottom: 20%;
+    display: inline;
+}

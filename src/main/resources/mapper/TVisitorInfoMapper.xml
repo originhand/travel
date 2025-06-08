@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jmj.mapper.TVisitorInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.jmj.entity.TVisitorInfo">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="visitorName" column="visitor_name" jdbcType="VARCHAR"/>
+            <result property="visitorTelNumber" column="visitor_tel_number" jdbcType="VARCHAR"/>
+            <result property="company" column="company" jdbcType="VARCHAR"/>
+            <result property="nums" column="nums" jdbcType="INTEGER"/>
+            <result property="visitorTime" column="visitor_time" jdbcType="TIMESTAMP"/>
+            <result property="empId" column="emp_id" jdbcType="INTEGER"/>
+            <result property="reason" column="reason" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="updateBy" column="update_by" jdbcType="INTEGER"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="remark" column="remark" jdbcType="VARCHAR"/>
+            <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+<!--&#45;&#45; 功能说明：获取指定员工关联的访客信息及对应员工姓名-->
+<!--    SELECT tvi.*, tei.emp_name        &#45;&#45; 选择访客表所有字段+员工姓名-->
+<!--    FROM t_visitor_info tvi           &#45;&#45; 主表：访客信息表-->
+<!--    LEFT JOIN t_emp_info tei          &#45;&#45; 左连接员工信息表-->
+<!--    ON tei.id = tvi.emp_id        &#45;&#45; 连接条件：员工ID匹配-->
+<!--    WHERE tvi.emp_id = #{empId}       &#45;&#45; 过滤条件：指定员工ID（MyBatis参数）-->
+<!--    ORDER BY tvi.status DESC          &#45;&#45; 排序：访客状态降序（数值大的在前）-->
+    <sql id="Base_Column_List">
+        id,visitor_name,visitor_tel_number,
+        company,nums,visitor_time,
+        emp_id,reason,create_time,
+        create_by,update_time,update_by,
+        status,remark,deleted
+    </sql>
+    <select id="getListForEmpId" resultType="com.jmj.entity.vo.VisitorInfoVO">
+        SELECT tvi.*, tei.emp_name
+        FROM t_visitor_info tvi
+                 LEFT JOIN t_emp_info tei ON tei.id = tvi.emp_id
+        where tvi.emp_id = #{empId}
+        order by tvi.status desc
+    </select>
+    
+    <select id="getCountForEmpId" resultType="int">
+        SELECT COUNT(*)
+        FROM t_visitor_info tvi
+        WHERE tvi.emp_id = #{empId}
+    </select>
+    
+    <select id="getListForEmpIdWithPage" resultType="com.jmj.entity.vo.VisitorInfoVO">
+        SELECT tvi.*, tei.emp_name
+        FROM t_visitor_info tvi
+                 LEFT JOIN t_emp_info tei ON tei.id = tvi.emp_id
+        WHERE tvi.emp_id = #{empId}
+        ORDER BY tvi.status DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+</mapper>

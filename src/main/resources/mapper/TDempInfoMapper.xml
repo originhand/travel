@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jmj.mapper.TDempInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.jmj.entity.TDempInfo">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="deptName" column="dept_name" jdbcType="VARCHAR"/>
+            <result property="headId" column="head_id" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="createBy" column="create_by" jdbcType="INTEGER"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="updateBy" column="update_by" jdbcType="TIMESTAMP"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,dept_name,head_id,
+        create_time,create_by,update_time,
+        update_by,status,deleted
+    </sql>
+</mapper>

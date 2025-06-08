@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jmj.mapper.TEmpInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.jmj.entity.TEmpInfo">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="empName" column="emp_name" jdbcType="VARCHAR"/>
+            <result property="empNo" column="emp_no" jdbcType="VARCHAR"/>
+            <result property="telNumber" column="tel_number" jdbcType="VARCHAR"/>
+            <result property="gender" column="gender" jdbcType="INTEGER"/>
+            <result property="inductionTime" column="induction_time" jdbcType="TIMESTAMP"/>
+            <result property="deptId" column="dept_id" jdbcType="INTEGER"/>
+            <result property="jobId" column="job_id" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="createBy" column="create_by" jdbcType="INTEGER"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="updateBy" column="update_by" jdbcType="INTEGER"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,emp_name,emp_no,
+        tel_number,gender,induction_time,
+        dept_id,job_id,create_time,
+        create_by,update_time,update_by,
+        status,deleted
+    </sql>
+</mapper>
