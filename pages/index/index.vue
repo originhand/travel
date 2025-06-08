@@ -7,7 +7,7 @@
 		<view class="list">
 			<up-waterfall v-model="flowList" ref="waterfallRef"> 
 				<template v-slot:left="{leftList}">
-					<view class="demo-warter" v-for="(item,index) in leftList" :key="index">
+					<view class="demo-warter" v-for="(item,index) in leftList" :key="index" @click="goDetail(item)">
 						<up-lazy-load threshold="-450" border-radius="10" :image="item.img" :index="index"></up-lazy-load>
 						<view class="demo-title">
 							{{item.title}}
@@ -29,7 +29,7 @@
 					</view>
 				</template>
 				<template v-slot:right="{rightList}">
-					<view class="demo-warter" v-for="(item,index) in rightList" :key="index">
+					<view class="demo-warter" v-for="(item,index) in rightList" :key="index" @click="goDetail(item)">
 						<up-lazy-load threshold="-450" border-radius="10" :image="item.img" :index="index"></up-lazy-load>
 						<view class="demo-title">
 							{{item.title}}
@@ -100,6 +100,13 @@
 			scrollShow.value = 0 //隐藏
 		}
 	})
+	
+	const goDetail = (item) => {
+			const can =JSON.stringify(item)
+			uni.navigateTo({
+				url: `/pages/detail/detail?item=${encodeURIComponent(can)}`
+			})
+		}
 
 	const toTop = () => {
 		uni.pageScrollTo({

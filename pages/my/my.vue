@@ -55,6 +55,15 @@
 			</view>
 		</view>
 		<view class="listBox"></view>
+		<view class="lists">
+			<uni-list>
+					<uni-list-item :show-extra-icon="true" :extra-icon="extraIcon1" showArrow title="个人信息" clickable></uni-list-item>
+					<uni-list-item :show-extra-icon="true" :extra-icon="extraIcon2" showArrow title="我的购物车" clickable></uni-list-item>
+					<uni-list-item :show-extra-icon="true" :extra-icon="extraIcon3" showArrow title="用户反馈" clickable></uni-list-item>
+					<uni-list-item :show-extra-icon="true" :extra-icon="extraIcon4" showArrow title="我的邮件" clickable></uni-list-item>
+					<uni-list-item :show-extra-icon="true" :extra-icon="extraIcon5" showArrow title="分享有礼" clickable></uni-list-item>
+			</uni-list>
+		</view>
 		<up-popup :show="show" closeable @close="close" round="20">
 			<view class="popup">
 				<view class="title">
@@ -85,18 +94,46 @@ import {onLoad} from '@dcloudio/uni-app'
 
 import { login,getUserInfo } from '../../api/api.js'
 
-onLoad(() => {
-	uni.getUserProfile({
-		desc: '获取用户头像和昵称',
-		success: (res) => {
-			console.log(res,'res')
-			
-		}
-	})
+onLoad(async() => {
+	//免登逻辑判断
+	if(uni.getStorageSync('token')&&!uni.getStorageSync('userInfo')){
+		const {avatarUrl,nickName} = await getUserInfo()
+		userInfo.avatarUrl = avatarUrl
+		userInfo.nickName = nickName 
+	}else if(uni.getStorageSync('token')&&uni.getStorageSync('userInfo')){
+		const {avatarUrl,nickName} = JSON.parse(uni.getStorageSync('userInfo')) 
+		userInfo.avatarUrl = avatarUrl
+		userInfo.nickName = nickName
+	}
 })
 
 
+const extraIcon1 = reactive({
+	color: '#666666',
+	size: '22',
+	type: 'auth'
+})
+const extraIcon2 = reactive({
+	color: '#666666',
+	size: '22',
+	type: 'cart'
+})
+const extraIcon3 = reactive({
+	color: '#666666',
+	size: '22',
+	type: 'chatboxes'
+})
+const extraIcon4 = reactive({
+	color: '#666666',
+	size: '22',
+	type: 'email'
+})
 
+const extraIcon5 = reactive({
+	color: '#666666',
+	size: '22',
+	type: 'gift'
+})
 
 const userInfo =reactive({
 	nickName: '',
@@ -110,10 +147,8 @@ const close = () => {
 }
 
 const userSubmit = () => {
-	login(userInfo.avatarUrl).then(res => {
-		show.value = false
-		
-	})
+	uni.setStorageSync('userInfo',JSON.stringify(userInfo))
+	show.value = false
 }
 
 const onChooseavatar  = (e) => { 
@@ -272,7 +307,16 @@ const setFun =  () => {
 			object-fit: cover;
 		}
 	}
-	
+	.listBox {
+		height: 200rpx;
+		margin: 20rpx auto;
+		padding: 20rpx;
+		box-sizing: border-box;
+		border-radius: 12rpx;
+		background-color: #fff;
+		box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+		width: 100%;
+	}
 }
 
 </style>

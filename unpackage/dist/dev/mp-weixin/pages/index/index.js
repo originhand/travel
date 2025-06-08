@@ -49,6 +49,12 @@ const _sfc_main = {
         scrollShow.value = 0;
       }
     });
+    const goDetail = (item) => {
+      const can = JSON.stringify(item);
+      common_vendor.index.navigateTo({
+        url: `/pages/detail/detail?item=${encodeURIComponent(can)}`
+      });
+    };
     const toTop = () => {
       common_vendor.index.pageScrollTo({
         scrollTop: 0,
@@ -108,7 +114,8 @@ const _sfc_main = {
               }, item.isDot ? {
                 h: common_vendor.t(item.isDot)
               } : {}, {
-                i: index
+                i: index,
+                j: common_vendor.o(($event) => goDetail(item), index)
               });
             }),
             b: i0,
@@ -140,7 +147,8 @@ const _sfc_main = {
               }, item.isDot ? {
                 h: common_vendor.t(item.isDot)
               } : {}, {
-                i: index
+                i: index,
+                j: common_vendor.o(($event) => goDetail(item), index)
               });
             }),
             b: i0,

@@ -2,7 +2,9 @@
   "pages": [
     "pages/index/index",
     "pages/like/like",
-    "pages/my/my"
+    "pages/my/my",
+    "pages/detail/detail",
+    "pages/line/line"
   ],
   "window": {
     "navigationBarTextStyle": "black",

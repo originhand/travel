@@ -143,3 +143,13 @@
   border-radius: 10rpx;
   object-fit: cover;
 }
+.content .listBox.data-v-2f1ef635 {
+  height: 200rpx;
+  margin: 20rpx auto;
+  padding: 20rpx;
+  box-sizing: border-box;
+  border-radius: 12rpx;
+  background-color: #fff;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  width: 100%;
+}
