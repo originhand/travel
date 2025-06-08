@@ -54,7 +54,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="listBox"></view>
+		<view class="listBox">
 		<view class="lists">
 			<uni-list>
 					<uni-list-item :show-extra-icon="true" :extra-icon="extraIcon1" showArrow title="个人信息" clickable></uni-list-item>
@@ -63,6 +63,7 @@
 					<uni-list-item :show-extra-icon="true" :extra-icon="extraIcon4" showArrow title="我的邮件" clickable></uni-list-item>
 					<uni-list-item :show-extra-icon="true" :extra-icon="extraIcon5" showArrow title="分享有礼" clickable></uni-list-item>
 			</uni-list>
+		</view>
 		</view>
 		<up-popup :show="show" closeable @close="close" round="20">
 			<view class="popup">
@@ -192,7 +193,6 @@ const setFun =  () => {
 	height: 100vh;
 	background-color: #f5f5f5;
 	.topBox {
-		height: 100%;
 		position: relative;
 		z-index: 1;
 		overflow: hidden;
