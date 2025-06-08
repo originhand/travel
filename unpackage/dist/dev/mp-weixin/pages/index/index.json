@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "uni-app",
+  "usingComponents": {
+    "up-search": "../../uni_modules/uview-plus/components/u-search/u-search",
+    "up-swiper": "../../uni_modules/uview-plus/components/u-swiper/u-swiper",
+    "up-notice-bar": "../../uni_modules/uview-plus/components/u-notice-bar/u-notice-bar",
+    "up-lazy-load": "../../uni_modules/uview-plus/components/u-lazy-load/u-lazy-load",
+    "up-waterfall": "../../uni_modules/uview-plus/components/u-waterfall/u-waterfall",
+    "up-icon": "../../uni_modules/uview-plus/components/u-icon/u-icon"
+  }
+}

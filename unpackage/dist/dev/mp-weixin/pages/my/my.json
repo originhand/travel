@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "",
+  "usingComponents": {
+    "uni-icons": "../../uni_modules/uni-icons/components/uni-icons/uni-icons",
+    "up-popup": "../../uni_modules/uview-plus/components/u-popup/u-popup"
+  }
+}

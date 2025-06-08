@@ -1,0 +1,1 @@
+{"version":3,"file":"mock.js","sources":["api/mock.js"],"sourcesContent":["import Mock from 'mockjs'\r\nimport pageApi from './mockData/pageApi'\r\n\r\nMock.mock(/api\\/user\\/getBanner/, 'get', pageApi.getBanner())\r\n"],"names":["Mock","pageApi"],"mappings":";;;AAGAA,cAAI,KAAC,KAAK,wBAAwB,OAAOC,qBAAAA,QAAQ,UAAW,CAAA;"}
